@@ -1,1 +1,133 @@
-<p>client-list works!</p>
+<div class="clients-page">
+  <app-page-header
+    title="Clientes"
+    description="Clientes de Katty's Nails."
+    icon="👥"
+  >
+    <button class="btn-primary" (click)="openCreateForm()">
+      <i class="fa-solid fa-plus"></i>
+      Nuevo Cliente
+    </button>
+  </app-page-header>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        placeholder="Buscar cliente..."
+        [(ngModel)]="search"
+        (keyup)="filterClients()"
+      />
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Cargando clientes...
+  </div>
+
+  <div class="table-card" *ngIf="!loading">
+    <table mat-table [dataSource]="paginatedClients">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let client">
+          <strong>{{ client.name }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.phone }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Correo</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.email || 'Sin correo' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Dirección</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.address || 'Sin dirección' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let client">
+          <div class="actions">
+            <button
+              class="action edit"
+              matTooltip="Editar cliente"
+              (click)="openEditForm(client)"
+            >
+              <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button
+              class="action delete"
+              matTooltip="Eliminar cliente"
+              (click)="deleteClient(client)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <app-empty-state
+      *ngIf="filteredClients.length === 0"
+      message="No existen clientes registrados."
+    ></app-empty-state>
+
+    <div
+      class="custom-paginator"
+      *ngIf="filteredClients.length > 0"
+    >
+      <span>
+        Mostrando {{ startItem }}-{{ endItem }} de
+        {{ totalItems }} clientes
+      </span>
+
+      <div class="pagination-buttons">
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

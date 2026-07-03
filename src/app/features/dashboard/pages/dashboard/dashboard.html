@@ -1,1 +1,182 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <div class="welcome">
+    <div>
+      <h1>¡Bienvenida, Kathy! 💅</h1>
+      <p>Este es el resumen de tu negocio.</p>
+    </div>
+
+    <div class="date-card">
+      📅 {{ today | date:'dd MMMM, yyyy' }}
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Cargando información...
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <div class="cards">
+      <div class="card">
+        <div class="icon pink">👥</div>
+        <div class="info">
+          <span>Clientes</span>
+          <h2>{{ dashboard.totalClients }}</h2>
+          <small>Total registrados</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon purple">💅</div>
+        <div class="info">
+          <span>Servicios</span>
+          <h2>{{ dashboard.totalServices }}</h2>
+          <small>Servicios activos</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon orange">📅</div>
+        <div class="info">
+          <span>Citas de hoy</span>
+          <h2>{{ dashboard.appointmentsToday }}</h2>
+          <small>Programadas</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon green">💵</div>
+        <div class="info">
+          <span>Ventas del mes</span>
+          <h2>${{ dashboard.salesMonth }}</h2>
+          <small>Ingresos</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon blue">📄</div>
+        <div class="info">
+          <span>Facturas</span>
+          <h2>{{ dashboard.totalInvoices }}</h2>
+          <small>Emitidas</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon red">⏰</div>
+        <div class="info">
+          <span>Pendientes</span>
+          <h2>{{ dashboard.pendingAppointments }}</h2>
+          <small>Por confirmar</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="chart">
+        <div class="title">
+          <h2>Ventas del negocio</h2>
+          <p>Resumen visual de ingresos</p>
+        </div>
+
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [xaxis]="chartOptions.xaxis"
+          [stroke]="chartOptions.stroke"
+          [dataLabels]="chartOptions.dataLabels"
+          [tooltip]="chartOptions.tooltip">
+        </apx-chart>
+      </div>
+
+      <div class="summary">
+        <h2>Resumen</h2>
+
+        <div class="item">
+          <span>Ventas hoy</span>
+          <strong>${{ dashboard.salesToday }}</strong>
+        </div>
+
+        <div class="item">
+          <span>Ventas del mes</span>
+          <strong>${{ dashboard.salesMonth }}</strong>
+        </div>
+
+        <div class="item">
+          <span>Total ventas</span>
+          <strong>${{ dashboard.totalSales }}</strong>
+        </div>
+
+        <div class="item">
+          <span>Citas</span>
+          <strong>{{ dashboard.totalAppointments }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="latest-section">
+      <div class="section-header">
+        <div>
+          <h2>Últimas citas</h2>
+          <p>Actividad reciente del negocio</p>
+        </div>
+
+        <button type="button">
+          Ver más
+        </button>
+      </div>
+
+      <div class="appointments-list">
+        <div class="appointment-row">
+          <div class="avatar">M</div>
+
+          <div class="appointment-info">
+            <strong>María Pérez</strong>
+            <span>Uñas Gel</span>
+          </div>
+
+          <div class="appointment-time">
+            Hoy 10:00
+          </div>
+
+          <div class="status pending">
+            Pendiente
+          </div>
+        </div>
+
+        <div class="appointment-row">
+          <div class="avatar">A</div>
+
+          <div class="appointment-info">
+            <strong>Ana López</strong>
+            <span>Manicure</span>
+          </div>
+
+          <div class="appointment-time">
+            Hoy 11:30
+          </div>
+
+          <div class="status completed">
+            Confirmada
+          </div>
+        </div>
+
+        <div class="appointment-row">
+          <div class="avatar">S</div>
+
+          <div class="appointment-info">
+            <strong>Sofía Mora</strong>
+            <span>Pedicure</span>
+          </div>
+
+          <div class="appointment-time">
+            Mañana 09:00
+          </div>
+
+          <div class="status completed">
+            Confirmada
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

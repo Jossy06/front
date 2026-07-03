@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>
+  {{ data ? 'Editar Cliente' : 'Nuevo Cliente' }}
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="clientForm" class="form">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input formControlName="name" placeholder="María Pérez" />
+      <small *ngIf="clientForm.get('name')?.invalid && clientForm.get('name')?.touched">
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input formControlName="phone" placeholder="0999999999" />
+      <small *ngIf="clientForm.get('phone')?.invalid && clientForm.get('phone')?.touched">
+        El teléfono es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Correo</label>
+      <input formControlName="email" placeholder="cliente@gmail.com" />
+    </div>
+
+    <div class="form-group">
+      <label>Dirección</label>
+      <input formControlName="address" placeholder="Quito" />
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button class="btn-cancel" type="button" (click)="close()">
+    Cancelar
+  </button>
+
+  <button class="btn-save" type="button" (click)="save()">
+    Guardar
+  </button>
+</div>

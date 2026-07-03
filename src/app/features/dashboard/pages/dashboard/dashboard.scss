@@ -1,0 +1,333 @@
+.dashboard {
+  padding: 35px;
+  background: #fff8fb;
+  min-height: 100vh;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 18px;
+  color: #777;
+}
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+
+  h1 {
+    font-size: 36px;
+    color: #8b1d53;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  p {
+    color: #777;
+    font-size: 16px;
+  }
+}
+
+.date-card {
+  background: white;
+  padding: 15px 22px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .06);
+  font-weight: 600;
+  color: #555;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-bottom: 35px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+
+  transition: .25s;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 30px;
+}
+
+.info {
+
+  span {
+    color: #666;
+    font-size: 14px;
+  }
+
+  h2 {
+    margin: 6px 0;
+    font-size: 34px;
+    color: #222;
+  }
+
+  small {
+    color: #999;
+  }
+}
+
+.pink {
+  background: #ffe6f1;
+}
+
+.purple {
+  background: #efe2ff;
+}
+
+.orange {
+  background: #fff0d7;
+}
+
+.green {
+  background: #e5fff0;
+}
+
+.blue {
+  background: #e8f3ff;
+}
+
+.red {
+  background: #ffe5e5;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+.chart,
+.summary,
+.latest-section {
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+}
+
+.chart {
+  padding: 28px;
+}
+
+.title {
+
+  h2 {
+    color: #8b1d53;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #777;
+    margin-bottom: 20px;
+  }
+}
+
+.summary {
+  padding: 28px;
+
+  h2 {
+    color: #8b1d53;
+    margin-bottom: 25px;
+  }
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid #f3f3f3;
+
+  &:last-child {
+    border: none;
+  }
+
+  span {
+    color: #666;
+  }
+
+  strong {
+    color: #8b1d53;
+    font-size: 22px;
+  }
+}
+
+.latest-section {
+  padding: 28px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 25px;
+
+  h2 {
+    color: #8b1d53;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #888;
+  }
+
+  button {
+    border: none;
+    background: #d63384;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover {
+      background: #b61d68;
+    }
+  }
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.appointment-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 150px 130px;
+  align-items: center;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: #fafafa;
+
+  transition: .2s;
+
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #d63384, #8b1d53);
+
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+}
+
+.appointment-info {
+
+  strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  span {
+    color: #888;
+  }
+}
+
+.appointment-time {
+  color: #666;
+  font-weight: 500;
+}
+
+.status {
+  text-align: center;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+@media (max-width: 1200px) {
+
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .appointment-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .dashboard {
+    padding: 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+}

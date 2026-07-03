@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>
+  {{ data ? 'Editar Material' : 'Nuevo Material' }}
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="form-group">
+      <label>Nombre del material</label>
+
+      <input
+        formControlName="name"
+        placeholder="Gel UV"
+      />
+
+      <small
+        *ngIf="
+          form.get('name')?.invalid &&
+          form.get('name')?.touched
+        "
+      >
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Precio unitario</label>
+
+      <input
+        type="number"
+        formControlName="unit_price"
+        placeholder="3.50"
+      />
+
+      <small
+        *ngIf="
+          form.get('unit_price')?.invalid &&
+          form.get('unit_price')?.touched
+        "
+      >
+        El precio es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Stock</label>
+
+      <input
+        type="number"
+        formControlName="stock"
+        placeholder="10"
+      />
+
+      <small
+        *ngIf="
+          form.get('stock')?.invalid &&
+          form.get('stock')?.touched
+        "
+      >
+        El stock es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Unidad</label>
+
+      <input
+        formControlName="unit"
+        placeholder="ml, unidad, gr, caja"
+      />
+
+      <small
+        *ngIf="
+          form.get('unit')?.invalid &&
+          form.get('unit')?.touched
+        "
+      >
+        La unidad es obligatoria.
+      </small>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button
+    class="btn-cancel"
+    type="button"
+    (click)="close()"
+  >
+    Cancelar
+  </button>
+
+  <button
+    class="btn-save"
+    type="button"
+    (click)="save()"
+  >
+    Guardar
+  </button>
+</div>

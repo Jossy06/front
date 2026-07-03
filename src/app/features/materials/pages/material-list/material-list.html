@@ -1,1 +1,130 @@
-<p>material-list works!</p>
+<div class="materials-page">
+  <app-page-header
+    title="Materiales"
+    description="Administra el inventario de Katty's Nails."
+    icon="📦"
+  >
+    <button class="btn-primary" (click)="openCreateForm()">
+      <i class="fa-solid fa-plus"></i>
+      Nuevo Material
+    </button>
+  </app-page-header>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        placeholder="Buscar material..."
+        [(ngModel)]="search"
+        (keyup)="filterMaterials()"
+      />
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Cargando materiales...
+  </div>
+
+  <div class="table-card" *ngIf="!loading">
+    <table mat-table [dataSource]="paginatedMaterials">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Material</th>
+        <td mat-cell *matCellDef="let material">
+          <strong>{{ material.name }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit_price">
+        <th mat-header-cell *matHeaderCellDef>Precio unitario</th>
+        <td mat-cell *matCellDef="let material">
+          ${{ material.unit_price }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef>Stock</th>
+        <td mat-cell *matCellDef="let material">
+          {{ material.stock }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef>Unidad</th>
+        <td mat-cell *matCellDef="let material">
+          {{ material.unit }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let material">
+          <div class="actions">
+            <button
+              class="action edit"
+              matTooltip="Editar material"
+              (click)="openEditForm(material)"
+            >
+              <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button
+              class="action delete"
+              matTooltip="Eliminar material"
+              (click)="deleteMaterial(material)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <app-empty-state
+      *ngIf="filteredMaterials.length === 0"
+      message="No existen materiales registrados."
+    ></app-empty-state>
+
+    <div class="custom-paginator" *ngIf="filteredMaterials.length > 0">
+      <span>
+        Mostrando {{ startItem }}-{{ endItem }} de
+        {{ totalItems }} materiales
+      </span>
+
+      <div class="pagination-buttons">
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

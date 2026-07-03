@@ -5,45 +5,59 @@
     <p>Centro de Belleza</p>
   </div>
 
-  <nav>
+  <div class="divider"></div>
+
+  <nav class="menu">
     <a routerLink="/dashboard" routerLinkActive="active">
-      <i class="fa-solid fa-chart-line"></i>
-      Dashboard
+      <i class="fa-solid fa-house"></i>
+      <span>Dashboard</span>
     </a>
 
     <a routerLink="/clients" routerLinkActive="active">
       <i class="fa-solid fa-users"></i>
-      Clientes
+      <span>Clientes</span>
     </a>
 
     <a routerLink="/services" routerLinkActive="active">
       <i class="fa-solid fa-spa"></i>
-      Servicios
+      <span>Servicios</span>
     </a>
 
     <a routerLink="/materials" routerLinkActive="active">
       <i class="fa-solid fa-box"></i>
-      Materiales
+      <span>Materiales</span>
+    </a>
+
+    <a routerLink="/service-materials" routerLinkActive="active">
+      <i class="fa-solid fa-bottle-droplet"></i>
+      <span>Materiales Servicio</span>
     </a>
 
     <a routerLink="/appointments" routerLinkActive="active">
       <i class="fa-solid fa-calendar-days"></i>
-      Citas
+      <span>Citas</span>
     </a>
 
     <a routerLink="/invoices" routerLinkActive="active">
       <i class="fa-solid fa-file-invoice-dollar"></i>
-      Facturas
+      <span>Facturas</span>
     </a>
 
     <a routerLink="/reports" routerLinkActive="active">
       <i class="fa-solid fa-chart-pie"></i>
-      Reportes
+      <span>Reportes</span>
     </a>
 
     <a routerLink="/settings" routerLinkActive="active">
       <i class="fa-solid fa-gear"></i>
-      Configuración
+      <span>Configuración</span>
     </a>
   </nav>
+
+  <div class="sidebar-footer">
+    <button type="button" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Cerrar sesión</span>
+    </button>
+  </div>
 </aside>

@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>
+  {{ data ? 'Editar Servicio' : 'Nuevo Servicio' }}
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="form-group">
+      <label>Nombre del servicio</label>
+
+      <input
+        formControlName="name"
+        placeholder="Uñas Gel"
+      />
+
+      <small
+        *ngIf="
+          form.get('name')?.invalid &&
+          form.get('name')?.touched
+        "
+      >
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Descripción</label>
+
+      <textarea
+        formControlName="description"
+        placeholder="Servicio de uñas gel"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Precio base</label>
+
+      <input
+        type="number"
+        formControlName="base_price"
+        placeholder="25.00"
+      />
+
+      <small
+        *ngIf="
+          form.get('base_price')?.invalid &&
+          form.get('base_price')?.touched
+        "
+      >
+        El precio base es obligatorio.
+      </small>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button
+    class="btn-cancel"
+    type="button"
+    (click)="close()"
+  >
+    Cancelar
+  </button>
+
+  <button
+    class="btn-save"
+    type="button"
+    (click)="save()"
+  >
+    Guardar
+  </button>
+</div>

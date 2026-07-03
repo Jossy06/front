@@ -24,6 +24,24 @@ export const routes: Routes = [
           import('./features/dashboard/pages/dashboard/dashboard')
             .then((m) => m.Dashboard),
       },
+      {
+        path: 'clients',
+        loadComponent: () =>
+          import('./features/clients/pages/client-list/client-list')
+            .then((m) => m.ClientList),
+      },
+      {
+        path: 'services',
+        loadComponent: () =>
+          import('./features/services/pages/service-list/service-list')
+            .then((m) => m.ServiceList),
+      },
+      {
+        path: 'materials',
+        loadComponent: () =>
+          import('./features/materials/pages/material-list/material-list')
+            .then((m) => m.MaterialList),
+      },
     ],
   },
   {
