@@ -25,6 +25,12 @@ export const routes: Routes = [
             .then((m) => m.Dashboard),
       },
       {
+        path: 'calculator',
+        loadComponent: () =>
+          import('./features/calculator/pages/calculator-page/calculator-page')
+            .then((m) => m.CalculatorPage),
+      },
+      {
         path: 'clients',
         loadComponent: () =>
           import('./features/clients/pages/client-list/client-list')
@@ -41,6 +47,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/materials/pages/material-list/material-list')
             .then((m) => m.MaterialList),
+      },
+      {
+        path: 'service-categories',
+        loadComponent: () =>
+          import('./features/service-categories/pages/service-category-list/service-category-list')
+            .then((m) => m.ServiceCategoryList),
       },
     ],
   },

@@ -1,0 +1,112 @@
+<div class="calculator-page">
+  <div class="header">
+    <div>
+      <h1>Calculadora de Servicios</h1>
+      <p>Selecciona servicios, técnicas y extras para calcular el total.</p>
+    </div>
+
+    <div
+      class="total-chip"
+      [style.--active-color]="activeCategory.color"
+    >
+      Total: ${{ total.toFixed(2) }}
+    </div>
+  </div>
+
+  <section class="categories">
+    <button
+      class="category-card"
+      *ngFor="let category of categories"
+      [class.active]="activeCategory.name === category.name"
+      [style.--category-color]="category.color"
+      (click)="selectCategory(category)"
+    >
+      <span>{{ category.icon }}</span>
+      <strong>{{ category.name }}</strong>
+    </button>
+  </section>
+
+  <section
+    class="calculator-card"
+    [style.--active-color]="activeCategory.color"
+  >
+    <div class="category-title">
+      <h2>{{ activeCategory.icon }} {{ activeCategory.name }}</h2>
+    </div>
+
+    <div class="tabs">
+      <button
+        *ngFor="let tab of tabs"
+        [class.active]="activeTab === tab"
+        (click)="activeTab = tab"
+      >
+        {{ tab }}
+      </button>
+    </div>
+
+    <div class="items-grid">
+      <button
+        class="service-item"
+        *ngFor="let item of items"
+        [class.selected]="isSelected(item)"
+        (click)="toggleItem(item)"
+      >
+        <strong>{{ item.name }}</strong>
+        <span>${{ item.price.toFixed(2) }}</span>
+      </button>
+    </div>
+
+    <h3>Técnicas y adicionales</h3>
+
+    <div class="extras-list">
+      <button
+        class="extra-item"
+        *ngFor="let extra of extras"
+        [class.selected]="isSelected(extra)"
+        (click)="toggleItem(extra)"
+      >
+        <div>
+          <span>{{ extra.icon }}</span>
+          <strong>{{ extra.name }}</strong>
+        </div>
+
+        <small>${{ extra.price.toFixed(2) }}</small>
+      </button>
+    </div>
+  </section>
+
+  <section
+    class="summary-card"
+    [style.--active-color]="activeCategory.color"
+  >
+    <h2>Resumen del servicio</h2>
+
+    <div
+      class="empty-summary"
+      *ngIf="selectedItems.length === 0"
+    >
+      Aún no has seleccionado servicios.
+    </div>
+
+    <div
+      class="summary-row"
+      *ngFor="let item of selectedItems"
+    >
+      <span>{{ item.name }}</span>
+      <strong>${{ item.price.toFixed(2) }}</strong>
+    </div>
+
+    <div class="summary-total">
+      <span>Total parcial</span>
+      <strong>${{ total.toFixed(2) }}</strong>
+    </div>
+
+    <button
+      class="save-btn"
+      [disabled]="selectedItems.length === 0"
+    >
+      Ver resumen
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </section>
+</div>
