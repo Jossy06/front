@@ -16,17 +16,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
 
 import {
-  CreateServiceMaterial,
-  ServiceMaterial,
-  ServiceMaterials,
-} from '../../../../core/services/service-materials';
+  ServiceGroup,
+  ServiceGroups,
+  CreateServiceGroup,
+} from '../../../../core/services/service-groups';
 
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
-import { ServiceMaterialFormDialog } from '../../components/service-material-form-dialog/service-material-form-dialog';
+import { ServiceGroupFormDialog } from '../../components/service-group-form-dialog/service-group-form-dialog';
 
 @Component({
-  selector: 'app-service-material-list',
+  selector: 'app-service-group-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -37,26 +37,26 @@ import { ServiceMaterialFormDialog } from '../../components/service-material-for
     PageHeader,
     EmptyState,
   ],
-  templateUrl: './service-material-list.html',
-  styleUrl: './service-material-list.scss',
+  templateUrl: './service-group-list.html',
+  styleUrl: './service-group-list.scss',
 })
-export class ServiceMaterialList implements OnInit {
-  private readonly serviceMaterialsService =
-    inject(ServiceMaterials);
-
+export class ServiceGroupList implements OnInit {
+  private readonly serviceGroupsService = inject(ServiceGroups);
   private readonly dialog = inject(MatDialog);
 
   displayedColumns: string[] = [
-    'service',
-    'material',
-    'quantity',
-    'unit_price',
-    'cost',
+    'name',
+    'category',
+    'sort',
+    'multiple',
+    'required',
+    'adds_price',
+    'is_active',
     'actions',
   ];
 
-  records: ServiceMaterial[] = [];
-  filteredRecords: ServiceMaterial[] = [];
+  groups: ServiceGroup[] = [];
+  filteredGroups: ServiceGroup[] = [];
 
   loading = true;
   search = '';
@@ -65,11 +65,11 @@ export class ServiceMaterialList implements OnInit {
   pageSize = 5;
 
   ngOnInit(): void {
-    this.loadRecords();
+    this.loadGroups();
   }
 
   get totalItems(): number {
-    return this.filteredRecords.length;
+    return this.filteredGroups.length;
   }
 
   get totalPages(): number {
@@ -85,7 +85,6 @@ export class ServiceMaterialList implements OnInit {
 
   get startItem(): number {
     if (this.totalItems === 0) return 0;
-
     return (this.currentPage - 1) * this.pageSize + 1;
   }
 
@@ -96,22 +95,22 @@ export class ServiceMaterialList implements OnInit {
     );
   }
 
-  get paginatedRecords(): ServiceMaterial[] {
+  get paginatedGroups(): ServiceGroup[] {
     const start = (this.currentPage - 1) * this.pageSize;
 
-    return this.filteredRecords.slice(
+    return this.filteredGroups.slice(
       start,
       start + this.pageSize,
     );
   }
 
-  loadRecords(): void {
+  loadGroups(): void {
     this.loading = true;
 
-    this.serviceMaterialsService.findAll().subscribe({
-      next: (response) => {
-        this.records = response;
-        this.filteredRecords = response;
+    this.serviceGroupsService.findAll().subscribe({
+      next: (response: ServiceGroup[]) => {
+        this.groups = response;
+        this.filteredGroups = response;
         this.currentPage = 1;
         this.loading = false;
       },
@@ -120,33 +119,26 @@ export class ServiceMaterialList implements OnInit {
 
         Swal.fire(
           'Error',
-          'No se pudieron cargar los materiales por servicio',
+          'No se pudieron cargar los grupos',
           'error',
         );
       },
     });
   }
 
-  filterRecords(): void {
+  filterGroups(): void {
     const value = this.search.toLowerCase().trim();
 
-    this.filteredRecords = this.records.filter((record) =>
-      (record.service?.name ?? '').toLowerCase().includes(value) ||
-      (record.material?.name ?? '').toLowerCase().includes(value),
+    this.filteredGroups = this.groups.filter((group) =>
+      group.name.toLowerCase().includes(value) ||
+      (group.category?.name ?? '').toLowerCase().includes(value),
     );
 
     this.currentPage = 1;
   }
 
-  calculateCost(record: ServiceMaterial): number {
-    const quantity = Number(record.quantity);
-    const unitPrice = Number(record.material?.unit_price ?? 0);
-
-    return quantity * unitPrice;
-  }
-
   openCreateForm(): void {
-    const dialogRef = this.dialog.open(ServiceMaterialFormDialog, {
+    const dialogRef = this.dialog.open(ServiceGroupFormDialog, {
       width: '560px',
       maxWidth: '95vw',
       data: null,
@@ -154,25 +146,25 @@ export class ServiceMaterialList implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      (result: CreateServiceMaterial | undefined) => {
+      (result: CreateServiceGroup | undefined) => {
         if (!result) return;
 
-        this.serviceMaterialsService.create(result).subscribe({
+        this.serviceGroupsService.create(result).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Material asignado',
+              title: 'Grupo creado',
               timer: 1200,
               showConfirmButton: false,
             });
 
             this.search = '';
-            this.loadRecords();
+            this.loadGroups();
           },
           error: () => {
             Swal.fire(
               'Error',
-              'No se pudo asignar el material',
+              'No se pudo crear el grupo',
               'error',
             );
           },
@@ -181,33 +173,33 @@ export class ServiceMaterialList implements OnInit {
     );
   }
 
-  openEditForm(record: ServiceMaterial): void {
-    const dialogRef = this.dialog.open(ServiceMaterialFormDialog, {
+  openEditForm(group: ServiceGroup): void {
+    const dialogRef = this.dialog.open(ServiceGroupFormDialog, {
       width: '560px',
       maxWidth: '95vw',
-      data: record,
+      data: group,
       panelClass: 'custom-dialog',
     });
 
     dialogRef.afterClosed().subscribe(
-      (result: CreateServiceMaterial | undefined) => {
+      (result: CreateServiceGroup | undefined) => {
         if (!result) return;
 
-        this.serviceMaterialsService.update(record.id, result).subscribe({
+        this.serviceGroupsService.update(group.id, result).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Registro actualizado',
+              title: 'Grupo actualizado',
               timer: 1200,
               showConfirmButton: false,
             });
 
-            this.loadRecords();
+            this.loadGroups();
           },
           error: () => {
             Swal.fire(
               'Error',
-              'No se pudo actualizar el registro',
+              'No se pudo actualizar el grupo',
               'error',
             );
           },
@@ -216,10 +208,10 @@ export class ServiceMaterialList implements OnInit {
     );
   }
 
-  deleteRecord(record: ServiceMaterial): void {
+  deleteGroup(group: ServiceGroup): void {
     Swal.fire({
-      title: '¿Eliminar material del servicio?',
-      text: `${record.material?.name} se quitará de ${record.service?.name}`,
+      title: '¿Eliminar grupo?',
+      text: `Se eliminará ${group.name}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d63384',
@@ -229,21 +221,21 @@ export class ServiceMaterialList implements OnInit {
     }).then((result) => {
       if (!result.isConfirmed) return;
 
-      this.serviceMaterialsService.remove(record.id).subscribe({
+      this.serviceGroupsService.remove(group.id).subscribe({
         next: () => {
           Swal.fire({
             icon: 'success',
-            title: 'Registro eliminado',
+            title: 'Grupo eliminado',
             timer: 1200,
             showConfirmButton: false,
           });
 
-          this.loadRecords();
+          this.loadGroups();
         },
         error: () => {
           Swal.fire(
             'Error',
-            'No se pudo eliminar el registro',
+            'No se pudo eliminar el grupo',
             'error',
           );
         },

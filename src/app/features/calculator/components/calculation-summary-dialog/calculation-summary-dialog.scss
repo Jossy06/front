@@ -1,0 +1,156 @@
+.summary-dialog {
+  --active-color: #d63384;
+  min-width: 0;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 22px 24px 10px;
+}
+
+.category-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(
+    in srgb,
+    var(--active-color) 12%,
+    white
+  );
+  font-size: 30px;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+  color: var(--active-color);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.summary-header p {
+  margin: 4px 0 0;
+  color: #888;
+}
+
+.services-list {
+  margin-top: 8px;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1e2ea;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  > span {
+    color: var(--active-color);
+    font-size: 17px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  strong {
+    color: #333;
+    font-size: 16px;
+  }
+
+  small {
+    color: #999;
+  }
+}
+
+.total-box {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: color-mix(
+    in srgb,
+    var(--active-color) 9%,
+    white
+  );
+
+  span {
+    color: #555;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  strong {
+    color: var(--active-color);
+    font-size: 30px;
+    font-weight: 900;
+  }
+}
+
+.customer-message {
+  margin: 18px 0 4px;
+  color: #888;
+  text-align: center;
+  font-size: 14px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 24px 22px;
+}
+
+.btn-cancel,
+.btn-confirm {
+  border: none;
+  border-radius: 13px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.btn-cancel {
+  background: #f1f1f1;
+  color: #555;
+}
+
+.btn-confirm {
+  background: var(--active-color);
+  color: white;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
+
+@media (max-width: 600px) {
+  .summary-header {
+    padding: 18px 18px 8px;
+  }
+
+  .dialog-actions {
+    padding: 12px 18px 18px;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    flex: 1;
+  }
+}

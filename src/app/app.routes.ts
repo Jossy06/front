@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { authGuard } from './core/guards/auth-guard';
+
 export const routes: Routes = [
   {
     path: '',
@@ -14,6 +16,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./layout/pages/main-layout/main-layout')
         .then((m) => m.MainLayout),
@@ -37,6 +40,18 @@ export const routes: Routes = [
             .then((m) => m.ClientList),
       },
       {
+        path: 'service-categories',
+        loadComponent: () =>
+          import('./features/service-categories/pages/service-category-list/service-category-list')
+            .then((m) => m.ServiceCategoryList),
+      },
+      {
+        path: 'service-groups',
+        loadComponent: () =>
+          import('./features/service-groups/pages/service-group-list/service-group-list')
+            .then((m) => m.ServiceGroupList),
+      },
+      {
         path: 'services',
         loadComponent: () =>
           import('./features/services/pages/service-list/service-list')
@@ -49,15 +64,20 @@ export const routes: Routes = [
             .then((m) => m.MaterialList),
       },
       {
-        path: 'service-categories',
+        path: 'service-materials',
         loadComponent: () =>
-          import('./features/service-categories/pages/service-category-list/service-category-list')
-            .then((m) => m.ServiceCategoryList),
+        import('./features/service-materials/pages/service-material-list/service-material-list')
+          .then((m) => m.ServiceMaterialList),
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
       },
     ],
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
   },
 ];

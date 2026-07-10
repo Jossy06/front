@@ -1,0 +1,92 @@
+<h2 mat-dialog-title>
+  {{ data ? 'Editar Material del Servicio' : 'Nuevo Material del Servicio' }}
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="form-group">
+      <label>Servicio</label>
+
+      <select formControlName="service_id">
+        <option value="">Selecciona un servicio</option>
+
+        <option
+          *ngFor="let service of services"
+          [value]="service.id"
+        >
+          {{ service.name }} - ${{ service.base_price }}
+        </option>
+      </select>
+
+      <small
+        *ngIf="
+          form.get('service_id')?.invalid &&
+          form.get('service_id')?.touched
+        "
+      >
+        El servicio es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Material</label>
+
+      <select formControlName="material_id">
+        <option value="">Selecciona un material</option>
+
+        <option
+          *ngFor="let material of materials"
+          [value]="material.id"
+        >
+          {{ material.name }} - ${{ material.unit_price }} / {{ material.unit }}
+        </option>
+      </select>
+
+      <small
+        *ngIf="
+          form.get('material_id')?.invalid &&
+          form.get('material_id')?.touched
+        "
+      >
+        El material es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Cantidad usada</label>
+
+      <input
+        type="number"
+        formControlName="quantity"
+        placeholder="Ej: 2"
+      />
+
+      <small
+        *ngIf="
+          form.get('quantity')?.invalid &&
+          form.get('quantity')?.touched
+        "
+      >
+        La cantidad debe ser mayor a 0.
+      </small>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button
+    type="button"
+    class="btn-cancel"
+    (click)="close()"
+  >
+    Cancelar
+  </button>
+
+  <button
+    type="button"
+    class="btn-save"
+    (click)="save()"
+  >
+    Guardar
+  </button>
+</div>

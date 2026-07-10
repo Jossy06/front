@@ -1,0 +1,58 @@
+<div
+  class="summary-dialog"
+  [style.--active-color]="data.color"
+>
+  <div class="summary-header">
+    <div class="category-icon">
+      {{ data.categoryIcon || '✨' }}
+    </div>
+
+    <div>
+      <h2 mat-dialog-title>Resumen del servicio</h2>
+      <p>{{ data.categoryName }}</p>
+    </div>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="services-list">
+      <div
+        class="service-row"
+        *ngFor="let item of data.items"
+      >
+        <div class="service-info">
+          <strong>{{ item.name }}</strong>
+          <small>{{ item.groupName }}</small>
+        </div>
+
+        <span>${{ item.price.toFixed(2) }}</span>
+      </div>
+    </div>
+
+    <div class="total-box">
+      <span>Total a pagar</span>
+      <strong>${{ data.total.toFixed(2) }}</strong>
+    </div>
+
+    <p class="customer-message">
+      Gracias por elegir Katty's Nails.
+    </p>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button
+      type="button"
+      class="btn-cancel"
+      (click)="close()"
+    >
+      Volver
+    </button>
+
+    <button
+      type="button"
+      class="btn-confirm"
+      (click)="confirm()"
+    >
+      Confirmar
+    </button>
+  </div>
+</div>

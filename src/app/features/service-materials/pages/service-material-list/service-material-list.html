@@ -1,1 +1,137 @@
-<p>service-material-list works!</p>
+<div class="service-materials-page">
+  <app-page-header
+    title="Materiales por servicio"
+    description="Define qué materiales consume cada servicio para calcular costos reales."
+    icon="🧴"
+  >
+    <button class="btn-primary" (click)="openCreateForm()">
+      <i class="fa-solid fa-plus"></i>
+      Nuevo Registro
+    </button>
+  </app-page-header>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        placeholder="Buscar por servicio o material..."
+        [(ngModel)]="search"
+        (keyup)="filterRecords()"
+      />
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Cargando materiales por servicio...
+  </div>
+
+  <div class="table-card" *ngIf="!loading">
+    <table mat-table [dataSource]="paginatedRecords">
+      <ng-container matColumnDef="service">
+        <th mat-header-cell *matHeaderCellDef>Servicio</th>
+        <td mat-cell *matCellDef="let record">
+          <strong>{{ record.service?.name }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="material">
+        <th mat-header-cell *matHeaderCellDef>Material</th>
+        <td mat-cell *matCellDef="let record">
+          {{ record.material?.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Cantidad usada</th>
+        <td mat-cell *matCellDef="let record">
+          {{ record.quantity }} {{ record.material?.unit }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit_price">
+        <th mat-header-cell *matHeaderCellDef>Precio unitario</th>
+        <td mat-cell *matCellDef="let record">
+          ${{ record.material?.unit_price }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef>Costo</th>
+        <td mat-cell *matCellDef="let record">
+          <strong>${{ calculateCost(record).toFixed(2) }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let record">
+          <div class="actions">
+            <button
+              class="action edit"
+              matTooltip="Editar"
+              (click)="openEditForm(record)"
+            >
+              <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button
+              class="action delete"
+              matTooltip="Eliminar"
+              (click)="deleteRecord(record)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <app-empty-state
+      *ngIf="filteredRecords.length === 0"
+      message="No existen materiales asignados a servicios."
+    ></app-empty-state>
+
+    <div class="custom-paginator" *ngIf="filteredRecords.length > 0">
+      <span>
+        Mostrando {{ startItem }}-{{ endItem }} de
+        {{ totalItems }} registros
+      </span>
+
+      <div class="pagination-buttons">
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
